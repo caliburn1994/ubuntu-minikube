@@ -31,15 +31,27 @@ if ! kubectl get pods | grep gitlab &>/dev/null; then
 
   cat <<EOF >"${PROJECT_ROOT_PATH}/out/gitlab/open-gitlab.sh"
 #!/usr/bin/env bash
-echo "user: root"
-echo password: $(
+user=root
+password=$(
     kubectl get secret gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode
     echo
   )
-xdg-open https://gitlab.${ip}.nip.io
+url-inner=https://gitlab.${ip}.nip.io"
+url-server=http://192.168.0.180:9000
 EOF
 
-  # gitlab-redis
+  # gitlab service
+  SERVICE_NAME="minikube-gitlab.service"
+  tmpdir=$(mktemp -d)
+  echo_debug "forward redis fo gitlab as a service..."
+  envsubst < "${CURRENT_DIR}/${SERVICE_NAME}" > "${tmpdir}/${SERVICE_NAME}"
+  sudo cp "${tmpdir}/${SERVICE_NAME}" /etc/systemd/system/
+  sudo systemctl daemon-reload
+  sudo systemctl enable "${SERVICE_NAME}"
+  sudo systemctl start "${SERVICE_NAME}"
+
+
+  # gitlab-redis service
   SERVICE_NAME="minikube-gitlab-redis.service"
   tmpdir=$(mktemp -d)
   echo_debug "forward redis fo gitlab as a service..."
@@ -56,7 +68,6 @@ EOF
 #   redis-cli -c -h 127.0.0.1 -a ${redis_password}
 password=${redis_password}
 port=6379
-
 EOF
 
 fi

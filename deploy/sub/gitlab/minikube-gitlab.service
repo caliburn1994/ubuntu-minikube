@@ -2,11 +2,11 @@
 # https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html
 
 [Unit]
-Description= redis of git in k8s
+Description=gitlab in k8s
 After=docker.service
 
 [Service]
-ExecStart=kubectl port-forward --namespace default svc/gitlab-redis-master 6379:6379 --address 0.0.0.0
+ExecStart=kubectl port-forward --namespace default svc/gitlab-webservice-default 9000:8080 --address 0.0.0.0
 Restart=always
 User=${USER}
 RestartSec=3
