@@ -1,0 +1,15 @@
+# Chinese article:
+# https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html
+
+[Unit]
+Description=forward psql in kubernetes
+After=docker.service
+
+[Service]
+ExecStart=kubectl port-forward --namespace default svc/gitlab-redis-master 6379:6379 --address 0.0.0.0
+Restart=always
+User=${USER}
+RestartSec=3
+
+[Install]
+WantedBy=graphical.target

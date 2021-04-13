@@ -34,6 +34,8 @@ function install_desktop_apps() {
     sudo apt install ./google-chrome-stable_current_amd64.deb && rm ./google-chrome-stable_current_amd64.deb
   fi
 }
+
+
 function install_tools() {
   # system
   sudo apt-get install -y openssh-server git make curl vim net-tools jq
@@ -46,6 +48,7 @@ function install_tools() {
   bash "${PROJECT_ROOT_PATH}/deploy/sub/helm.sh"
   bash "${PROJECT_ROOT_PATH}/deploy/sub/minikube/minikube.sh"
   # database in cloud
+  sudo apt-get install -y redis-tools
 
   # application in cloud
   bash "${PROJECT_ROOT_PATH}/deploy/sub/gitlab/gitlab.sh"

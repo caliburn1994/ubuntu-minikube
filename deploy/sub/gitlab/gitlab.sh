@@ -22,13 +22,14 @@ if ! kubectl get pods | grep gitlab &>/dev/null; then
   ip="$(minikube ip)"
   export ip
 
+  # install gitlab
   envsubst <"${CONFIG_FILE_TEMPLATE_LOCATION}" >"${CONFIG_FILE_LOCATION}"
   helm upgrade --install gitlab gitlab/gitlab \
     --timeout 600s \
     -f "$CONFIG_FILE_LOCATION"
   rm CONFIG_FILE_LOCATION
 
-  cat <<EOF >"${PROJECT_ROOT_PATH}/config/bin/open-gitlab.sh"
+  cat <<EOF >"${PROJECT_ROOT_PATH}/out/gitlab/open-gitlab.sh"
 #!/usr/bin/env bash
 echo "user: root"
 echo password: $(
@@ -37,7 +38,31 @@ echo password: $(
   )
 xdg-open https://gitlab.${ip}.nip.io
 EOF
+
+  # gitlab-redis
+  SERVICE_NAME="minikube-gitlab-redis.service"
+  tmpdir=$(mktemp -d)
+  echo_debug "forward redis fo gitlab as a service..."
+  envsubst < "${CURRENT_DIR}/${SERVICE_NAME}" > "${tmpdir}/${SERVICE_NAME}"
+  sudo cp "${tmpdir}/${SERVICE_NAME}" /etc/systemd/system/
+  sudo systemctl daemon-reload
+  sudo systemctl enable "${SERVICE_NAME}"
+  sudo systemctl start "${SERVICE_NAME}"
+
+  redis_password=$(kubectl get secrets --namespace default gitlab-redis-secret -o jsonpath="{.data.secret}" | base64 --decode)
+  cat <<EOF >"${PROJECT_ROOT_PATH}/out/gitlab/gitlab-redis.properties"
+# window tool: https://github.com/qishibo/AnotherRedisDesktopManager
+# by command:
+#   redis-cli -c -h 127.0.0.1 -a ${redis_password}
+password=${redis_password}
+port=6379
+
+EOF
+
 fi
+
+
+
 
 # check gitlab if normal
 rsl=$(kubectl get ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')

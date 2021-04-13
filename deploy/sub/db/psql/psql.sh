@@ -20,7 +20,7 @@ if ! kubectl get service "${POSTGRES_K8S_SERVICE}" &>/dev/null; then
   helm repo add bitnami https://charts.bitnami.com/bitnami
   helm install ${POSTGRES_K8S_BASENAME} bitnami/postgresql --version 10.2.2
 
-  SERVICE_NAME="minikube-psql"
+  SERVICE_NAME="minikube-psql.service"
   tmpdir=$(mktemp -d)
   echo_debug "Installing PostgreSQL as service..."
   envsubst < "${CURRENT_DIR}/${SERVICE_NAME}" > "${tmpdir}/${SERVICE_NAME}"
