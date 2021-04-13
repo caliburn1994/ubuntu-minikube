@@ -1,0 +1,16 @@
+# Chinese article:
+# https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html
+
+[Unit]
+Description=minikube
+After=docker.service
+
+[Service]
+ExecStart=minikube start
+ExecStop=minikube stop
+User=${USER}
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=graphical.target

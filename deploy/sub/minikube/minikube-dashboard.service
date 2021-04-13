@@ -1,0 +1,17 @@
+# Chinese article:
+# https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html
+
+# about security of proxy, see ` kubectl proxy --help `
+
+[Unit]
+Description=minikube dashboard
+After=minikube-custom.service
+
+[Service]
+ExecStart=kubectl proxy --address='0.0.0.0' --disable-filter=true
+Restart=always
+User=${USER}
+RestartSec=3
+
+[Install]
+WantedBy=graphical.target
