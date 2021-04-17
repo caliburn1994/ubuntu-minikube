@@ -106,3 +106,5 @@ if ! type -p minikube &>/dev/null; then
   sudo systemctl start "${SERVICE_NAME}"
 
 fi
+
+echo_debug "If dashboard does not work, you should print this command: minikube dashboard"
