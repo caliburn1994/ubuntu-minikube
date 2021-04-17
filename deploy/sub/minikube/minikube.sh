@@ -62,6 +62,12 @@ if ! type -p kubectl &>/dev/null; then
   echo "source <(kubectl completion bash)" >>~/.bashrc
 fi
 
+
+if [ "$(nproc --all)" -lt "2" ]; then
+  echo_warn "CPU should be more than 1"
+  exit
+fi
+
 # install minikube
 # https://minikube.sigs.k8s.io/docs/start/
 if ! type -p minikube &>/dev/null; then
