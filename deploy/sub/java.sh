@@ -7,7 +7,7 @@ CURRENT_DIR=$(dirname "$0")
 # dependencies
 . "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
-echo_info "Running ${CURRENT_DIR}"
+echo_info "Running ${CURRENT_DIR}/$(basename $0)"
 source "$HOME/.sdkman/bin/sdkman-init.sh" # as login shell, because sdkman is just valid in login shell mode
 # sdkman
 if ! type -p sdk &>/dev/null; then

@@ -9,7 +9,7 @@ CURRENT_DIR=$(dirname "$0")
 # dependencies
 . "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
-echo_info "Running ${CURRENT_DIR}"
+echo_info "Running ${CURRENT_DIR}/$(basename $0)"
 # install docker
 if ! type -p docker &>/dev/null; then
   echo_debug "Installing docker..."

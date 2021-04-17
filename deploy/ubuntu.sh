@@ -9,7 +9,7 @@ CURRENT_DIR=$(dirname "$0")
 # dependencies
 . "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
-echo_info "Running ${CURRENT_DIR}"
+echo_info "Running ${CURRENT_DIR}/$(basename $0)"
 function install_desktop_apps() {
   # for logitech keyboard and mouse
   sudo apt-get install -y solaar

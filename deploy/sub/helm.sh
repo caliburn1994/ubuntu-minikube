@@ -7,7 +7,7 @@ CURRENT_DIR=$(dirname "$0")
 # dependencies
 . "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
-echo_info "Running ${CURRENT_DIR}"
+echo_info "Running ${CURRENT_DIR}/$(basename $0)"
 # https://helm.sh/zh/
 if ! type -p helm &>/dev/null; then
   sudo snap install helm --classic
