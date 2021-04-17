@@ -29,7 +29,7 @@ if ! kubectl get pods | grep gitlab &>/dev/null; then
     -f "$CONFIG_FILE_LOCATION"
   rm CONFIG_FILE_LOCATION
 
-  cat <<EOF >"${PROJECT_ROOT_PATH}/out/gitlab/open-gitlab.sh"
+  cat <<EOF >"${PROJECT_ROOT_PATH}/out/gitlab/gitlab.properties"
 #!/usr/bin/env bash
 user=root
 password=$(
@@ -37,7 +37,6 @@ password=$(
     echo
   )
 url-inner=https://gitlab.${ip}.nip.io"
-url-server=http://192.168.0.180:9000
 EOF
 
   # gitlab service
@@ -73,11 +72,8 @@ EOF
 fi
 
 
-
-
 # check gitlab if normal
-rsl=$(kubectl get ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
-if [ $? -ne 0 ] && [ ! "$rsl" ]; then
+if ! minikube addons list | grep  ingress | grep -v dns | grep enabled &>/dev/null; then
   echo_warn "❌ Do you enable the minikube plugin ingress? like this"
   echo_warn "minikube addons enable ingress"
 fi
