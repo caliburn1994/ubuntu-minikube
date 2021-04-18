@@ -38,7 +38,7 @@ function install_desktop_apps() {
 
 function install_tools() {
   # system
-  sudo apt-get install -y openssh-server git make curl vim net-tools jq
+  sudo apt-get install -y openssh-server git make curl vim net-tools jq conntrack
 
   # development tools
   sudo apt-get install -y npm
