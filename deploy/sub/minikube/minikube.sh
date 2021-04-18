@@ -73,9 +73,7 @@ fi
 if ! type -p minikube &>/dev/null; then
   echo_debug "Installing minikube..."
 
-  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
-  sudo dpkg -i minikube_latest_amd64.deb
-  rm minikube_latest_amd64.deb
+  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb && sudo dpkg -i minikube_latest_amd64.deb && rm minikube_latest_amd64.deb
 
   # auto completion
   # shellcheck disable=SC1090
