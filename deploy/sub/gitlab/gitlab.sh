@@ -16,7 +16,7 @@ if ! kubectl get pods | grep gitlab &>/dev/null; then
   helm repo add gitlab https://charts.gitlab.io/
   helm repo update
 
-  # ip could be:
+  # ip also could be:
   # - $(kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="InternalIP")].address}')
   # - $(minikube ip)
   ip="$(minikube ip)"
@@ -33,32 +33,16 @@ if ! kubectl get pods | grep gitlab &>/dev/null; then
 #!/usr/bin/env bash
 user=root
 password=$(
-    kubectl get secret gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode
+    kubectl get secret gitlab-gitlab-initial-root-password -o jsonpath='{.data.password}' | base64 --decode
     echo
   )
 url-inner=https://gitlab.${ip}.nip.io"
 EOF
 
-  # gitlab service
-  SERVICE_NAME="minikube-gitlab.service"
-  tmpdir=$(mktemp -d)
-  echo_debug "forward redis fo gitlab as a service..."
-  envsubst < "${CURRENT_DIR}/${SERVICE_NAME}" > "${tmpdir}/${SERVICE_NAME}"
-  sudo cp "${tmpdir}/${SERVICE_NAME}" /etc/systemd/system/
-  sudo systemctl daemon-reload
-  sudo systemctl enable "${SERVICE_NAME}"
-  sudo systemctl start "${SERVICE_NAME}"
+  # service
+  make_service "minikube-gitlab.service"
+  make_service "minikube-gitlab-redis.service"
 
-
-  # gitlab-redis service
-  SERVICE_NAME="minikube-gitlab-redis.service"
-  tmpdir=$(mktemp -d)
-  echo_debug "forward redis fo gitlab as a service..."
-  envsubst < "${CURRENT_DIR}/${SERVICE_NAME}" > "${tmpdir}/${SERVICE_NAME}"
-  sudo cp "${tmpdir}/${SERVICE_NAME}" /etc/systemd/system/
-  sudo systemctl daemon-reload
-  sudo systemctl enable "${SERVICE_NAME}"
-  sudo systemctl start "${SERVICE_NAME}"
 
   redis_password=$(kubectl get secrets --namespace default gitlab-redis-secret -o jsonpath="{.data.secret}" | base64 --decode)
   cat <<EOF >"${PROJECT_ROOT_PATH}/out/gitlab/gitlab-redis.properties"

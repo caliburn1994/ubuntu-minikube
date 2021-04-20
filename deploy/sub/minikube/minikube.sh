@@ -80,28 +80,14 @@ if ! type -p minikube &>/dev/null; then
   source <(minikube completion bash)
   echo "source <(minikube completion bash)" >>~/.bashrc
 
-  minikube start
+  minikube start --vm-driver=none
   minikube addons enable ingress
 
   # run minikube when boot up
-  SERVICE_NAME="minikube.service"
-  tmpdir=$(mktemp -d)
-  echo_debug "Installing minikube as service..."
-  envsubst < "${CURRENT_DIR}/${SERVICE_NAME}" > "${tmpdir}/${SERVICE_NAME}"
-  sudo cp "${tmpdir}/${SERVICE_NAME}" /etc/systemd/system/
-  sudo systemctl daemon-reload
-  sudo systemctl enable "${SERVICE_NAME}"
-  sudo systemctl start "${SERVICE_NAME}"
+  make_service "minikube.service"
 
   # run minikube dashboard when boot up
-  SERVICE_NAME="minikube-dashboard.service"
-  tmpdir=$(mktemp -d)
-  echo_debug "Installing minikube dashboard as service..."
-  envsubst < "${CURRENT_DIR}/${SERVICE_NAME}" > "${tmpdir}/${SERVICE_NAME}"
-  sudo cp "${tmpdir}/${SERVICE_NAME}" /etc/systemd/system/
-  sudo systemctl daemon-reload
-  sudo systemctl enable "${SERVICE_NAME}"
-  sudo systemctl start "${SERVICE_NAME}"
+  make_service "minikube-dashboard.service"
 
 fi
 
