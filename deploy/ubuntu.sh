@@ -46,6 +46,7 @@ function install_tools() {
 
   # local cloud
   bash "${PROJECT_ROOT_PATH}/deploy/sub/helm.sh"
+  bash "${PROJECT_ROOT_PATH}/deploy/sub/docker.sh"
   bash "${PROJECT_ROOT_PATH}/deploy/sub/minikube/minikube.sh"
   # database in cloud
   sudo apt-get install -y redis-tools
