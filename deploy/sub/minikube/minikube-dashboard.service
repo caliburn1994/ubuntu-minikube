@@ -5,7 +5,7 @@
 
 [Unit]
 Description=minikube dashboard
-After=minikube-custom.service
+After=minikube.service
 
 [Service]
 ExecStart=kubectl proxy --address='0.0.0.0' --disable-filter=true

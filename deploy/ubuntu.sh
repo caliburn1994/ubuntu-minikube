@@ -49,6 +49,7 @@ function install_tools() {
   bash "${PROJECT_ROOT_PATH}/deploy/sub/minikube/minikube.sh"
   # database in cloud
   sudo apt-get install -y redis-tools
+  bash "${PROJECT_ROOT_PATH}/deploy/sub/db/psql/psql.sh"
 
   # application in cloud
   bash "${PROJECT_ROOT_PATH}/deploy/sub/gitlab/gitlab.sh"

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# color and echo
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 pink=$(tput setaf 13)
@@ -17,6 +18,10 @@ function echo_debug() {
   echo "${pink}${1}${reset}"
 }
 
+CURRENT_DIR=$(dirname "$0")
+function echo_running() {
+    echo_info "Running ${CURRENT_DIR}/$(basename $0)"
+}
 
 function make_service() {
   service_name=${1}
