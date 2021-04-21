@@ -41,15 +41,22 @@ if ! type -p minikube &>/dev/null; then
   echo "source <(minikube completion bash)" >>~/.bashrc
 
   sudo minikube start --vm-driver=none
+  sudo mv /root/.kube /root/.minikube $HOME
+  sudo chown -R $USER $HOME/.kube $HOME/.minikube
   minikube delete
-  export CHANGE_MINIKUBE_NONE_USER=true && minikube start --vm-driver=none
 
   # run minikube when boot up
-  make_service "minikube.service"
+  # make_service "minikube.service" todo doesn't work
 
   # run minikube dashboard when boot up
   make_service "minikube-dashboard.service"
 
+  # enable dashboard # todo need to test
+  minikube dashboard --url
+fi
+
+if ! minikube status >/dev/null 2>&1 ; then
+  export CHANGE_MINIKUBE_NONE_USER=true && minikube start --vm-driver=none
 fi
 
 echo_debug "If dashboard does not work, you should print this command: minikube dashboard"

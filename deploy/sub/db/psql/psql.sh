@@ -13,8 +13,8 @@ if ! kubectl get service "${POSTGRES_K8S_SERVICE}" &>/dev/null; then
   echo_debug "Installing PostgreSQL..."
   echo_debug "If helm version<3.1, use => helm install ${POSTGRES_K8S_BASENAME} bitnami/postgresql --version 10.2.2"
   echo_debug "If helm version>3.1, use => helm install ${POSTGRES_K8S_BASENAME} bitnami/postgresql"
-  sudo helm repo add bitnami https://charts.bitnami.com/bitnami
-  sudo helm install ${POSTGRES_K8S_BASENAME} bitnami/postgresql --version 10.2.2
+  helm repo add bitnami https://charts.bitnami.com/bitnami
+  helm install ${POSTGRES_K8S_BASENAME} bitnami/postgresql --version 10.2.2
 
   make_service "minikube-psql.service"
 fi
