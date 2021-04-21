@@ -40,12 +40,9 @@ if ! type -p minikube &>/dev/null; then
   source <(minikube completion bash)
   echo "source <(minikube completion bash)" >>~/.bashrc
 
-  minikube start --vm-driver=none
-  sysctl fs.protected_regular=0
-  minikube update-context
-  minikube addons enable ingress
-
-  #  CHANGE_MINIKUBE_NONE_USER=true
+  sudo minikube start --vm-driver=none
+  minikube delete
+  export CHANGE_MINIKUBE_NONE_USER=true && minikube start --vm-driver=none
 
   # run minikube when boot up
   make_service "minikube.service"
