@@ -27,9 +27,9 @@ function make_service() {
   service_name=${1}
 
   echo_debug "Making service ${service_name}"
-  tmpdir=$(mktemp -d)
-  envsubst < "${CURRENT_DIR}/${service_name}" > "${tmpdir}/${service_name}"
-  sudo cp "${tmpdir}/${service_name}" /etc/systemd/system/
+  tmp_dir=$(mktemp -d)
+  envsubst < "${CURRENT_DIR}/${service_name}" > "${tmp_dir}/${service_name}"
+  sudo cp "${tmp_dir}/${service_name}" /etc/systemd/system/
   sudo systemctl daemon-reload
   sudo systemctl enable "${service_name}"
   sudo systemctl start "${service_name}"
