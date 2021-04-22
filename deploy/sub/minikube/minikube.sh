@@ -35,15 +35,30 @@ if ! type -p minikube &>/dev/null; then
 
   curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb && sudo dpkg -i minikube_latest_amd64.deb && rm minikube_latest_amd64.deb
 
+  # check selinux
+  sudo apt-get install -y selinux-utils ethtool socat
+  if [ "$(getenforce)" == "enforcing" ];then echo_warn "selinux should be permissive or disabled"; fi
+  # check crictl
+  VERSION="v1.21.0"
+  if ! type -p type crictl &>/dev/null; then
+      wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz && sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin && rm -f crictl-$VERSION-linux-amd64.tar.gz
+  fi
+
+  sudo systemctl enable kubelet.service
+  swapoff -a # todo
+
   # auto completion
   # shellcheck disable=SC1090
   source <(minikube completion bash)
   echo "source <(minikube completion bash)" >>~/.bashrc
 
+  # sudo sysctl fs.protected_regular=0
   sudo minikube start --vm-driver=none
-  sudo mv /root/.kube /root/.minikube $HOME
-  sudo chown -R $USER $HOME/.kube $HOME/.minikube
-  minikube delete
+#  sudo mv /root/.kube /root/.minikube $HOME
+#  sudo chown -R $USER $HOME/.kube $HOME/.minikube
+#  sudo chgrp -R $USER $HOME/.minikube $HOME/.kube
+#  sudo chgrp -R $USER
+#  minikube delete
 
   # run minikube when boot up
   # make_service "minikube.service" todo doesn't work
@@ -58,5 +73,7 @@ fi
 if ! minikube status >/dev/null 2>&1 ; then
   export CHANGE_MINIKUBE_NONE_USER=true && minikube start --vm-driver=none
 fi
+
+make_service "minikube.service"
 
 echo_debug "If dashboard does not work, you should print this command: minikube dashboard"

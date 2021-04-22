@@ -6,12 +6,10 @@ Description=minikube
 After=docker.service
 
 [Service]
-ExecStart=minikube start --vm-driver=none
+ExecStart=sudo minikube start --vm-driver=none
 ExecStop=minikube stop
-User=${USER}
 Type=oneshot
 RemainAfterExit=yes
-Environment="CHANGE_MINIKUBE_NONE_USER=true"
 
 [Install]
 WantedBy=graphical.target
