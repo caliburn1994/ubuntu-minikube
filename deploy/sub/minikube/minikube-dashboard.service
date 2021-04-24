@@ -8,10 +8,11 @@ Description=minikube dashboard
 After=minikube.service
 
 [Service]
-ExecStart=kubectl proxy --address='0.0.0.0' --disable-filter=true
+ExecStart=/usr/bin/sudo kubectl proxy --address='0.0.0.0' --disable-filter=true
 Restart=always
-User=${USER}
+User=root
 RestartSec=3
+Environment="KUBECONFIG=/etc/kubernetes/kubelet.conf"
 
 [Install]
 WantedBy=graphical.target
