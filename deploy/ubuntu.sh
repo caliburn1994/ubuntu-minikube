@@ -29,9 +29,9 @@ function install_desktop_apps() {
   fi
 
   # chrome
-  type -p google-chrome &>/dev/null || \
+  if ! type -p google-chrome &>/dev/null; then
       wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb && rm ./google-chrome-stable_current_amd64.deb
-
+  fi
 }
 
 
@@ -56,4 +56,4 @@ function install_tools() {
 }
 
 install_desktop_apps
-install_tools
+#install_tools
