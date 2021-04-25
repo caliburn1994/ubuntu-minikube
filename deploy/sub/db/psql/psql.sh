@@ -19,25 +19,19 @@ if ! sudo kubectl get service "${POSTGRES_K8S_SERVICE}" &>/dev/null; then
   make_service "minikube-psql.service"
 fi
 
-# output result
 POSTGRES_PASSWORD="$(sudo kubectl get secret --namespace default ${POSTGRES_K8S_SERVICE} -o jsonpath="{.data.postgresql-password}" | base64 --decode)"
 # create database
 if ! type -p createdb &>/dev/null; then
-    # command tools
   sudo apt-get install -y postgresql-client-common postgresql-client
-
-  # create new database
   export "PGPASSWORD=${POSTGRES_PASSWORD}" ; createdb -h localhost -p 5432 -U postgres testdb
 fi
 
-# config
-# for gitlab
+# output config
 cat <<EOF >"${PROJECT_ROOT_PATH}/out/db/psql.properties"
 url=jdbc:postgresql://localhost:5432/postgres
 username=postgres
 password=${POSTGRES_PASSWORD}
 EOF
-# custom
 cat <<EOF >"${PROJECT_ROOT_PATH}/out/db/psql-2.properties"
 url=jdbc:postgresql://localhost:5432/testdb
 username=postgres
