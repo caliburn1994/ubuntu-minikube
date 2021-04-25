@@ -6,7 +6,7 @@ Description=minikube
 After=docker.service
 
 [Service]
-ExecStart=sudo minikube start --vm-driver=none --addons=ingress
+ExecStart=/usr/bin/sudo minikube start --vm-driver=none --addons=ingress
 ExecStop=sudo minikube stop
 Type=oneshot
 RemainAfterExit=yes
