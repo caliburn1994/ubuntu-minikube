@@ -18,21 +18,20 @@ function install_desktop_apps() {
   ibus restart
   # office
   sudo snap install notepad-plus-plus # notepad++
+
   # typora
   # https://support.typora.io/Typora-on-Linux/
   if ! type -p typora &>/dev/null; then
     wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -
-    # add Typora's repository
     sudo add-apt-repository 'deb https://typora.io/linux ./'
     sudo apt-get update
-    # install typora
     sudo apt-get install typora
   fi
+
   # chrome
-  if ! type -p google-chrome &>/dev/null; then
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo apt install ./google-chrome-stable_current_amd64.deb && rm ./google-chrome-stable_current_amd64.deb
-  fi
+  type -p google-chrome &>/dev/null || \
+      wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo apt install ./google-chrome-stable_current_amd64.deb && rm ./google-chrome-stable_current_amd64.deb
+
 }
 
 
