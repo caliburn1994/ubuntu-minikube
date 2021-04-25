@@ -42,7 +42,7 @@ if ! type -p minikube &>/dev/null; then
       wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz && sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin && rm -f crictl-$VERSION-linux-amd64.tar.gz
   fi
 
-  swapoff -a # todo
+#  swapoff -a # todo
 
   # auto completion
   # shellcheck disable=SC1090

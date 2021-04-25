@@ -3,4 +3,4 @@ volumePermissions:
   enabled: true
 
 #postgresqlDatabase: G2
-postgresqlPassword: postgres
+#postgresqlPassword: postgres
