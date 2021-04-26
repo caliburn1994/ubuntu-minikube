@@ -51,7 +51,7 @@ if ! type -p minikube &>/dev/null; then
 
   sudo sysctl fs.protected_regular=0
   echo "export KUBECONFIG=/etc/kubernetes/kubelet.conf" | tee -a ~/.bashrc; export KUBECONFIG=/etc/kubernetes/kubelet.conf
-  sudo minikube start --vm-driver=none --addons=ingress
+  sudo minikube start --vm-driver=none # --addons=ingress
 
   # run minikube when boot up
   make_service "minikube.service"
