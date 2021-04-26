@@ -56,4 +56,4 @@ function install_tools() {
 }
 
 install_desktop_apps
-#install_tools
+install_tools
