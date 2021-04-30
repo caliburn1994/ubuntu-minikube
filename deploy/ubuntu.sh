@@ -14,7 +14,7 @@ function install_desktop_apps() {
   # for logitech keyboard and mouse
   sudo apt-get install -y solaar
   # pinyin,screenshot
-  sudo apt-get install -y ibus-sunpinyin Flameshot
+  sudo apt-get install -y ibus-sunpinyin flameshot
   ibus restart
   # office
   sudo snap install notepad-plus-plus # notepad++
