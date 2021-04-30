@@ -13,8 +13,8 @@ echo_info "Running ${CURRENT_DIR}/$(basename $0)"
 function install_desktop_apps() {
   # for logitech keyboard and mouse
   sudo apt-get install -y solaar
-  # pinyin
-  sudo apt-get install -y ibus-sunpinyin
+  # pinyin,screenshot
+  sudo apt-get install -y ibus-sunpinyin Flameshot
   ibus restart
   # office
   sudo snap install notepad-plus-plus # notepad++
