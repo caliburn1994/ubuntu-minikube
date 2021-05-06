@@ -53,6 +53,9 @@ function install_tools() {
 
   # application in cloud
   bash "${PROJECT_ROOT_PATH}/deploy/sub/gitlab/gitlab.sh"
+
+  # local aws
+  bash "${PROJECT_ROOT_PATH}/deploy/sub/localstack/localstack.sh"
 }
 
 install_desktop_apps
