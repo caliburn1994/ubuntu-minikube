@@ -56,6 +56,7 @@ function install_tools() {
 
   # local aws
   bash "${PROJECT_ROOT_PATH}/deploy/sub/localstack/localstack.sh"
+  bash "${PROJECT_ROOT_PATH}/deploy/sub/localstack/aws-cli.sh"
 }
 
 install_desktop_apps
