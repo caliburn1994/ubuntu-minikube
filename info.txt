@@ -1,10 +1,22 @@
-NAME         	NAMESPACE	REVISION	UPDATED                                	STATUS  	CHART               	APP VERSION
-gitlab       	default  	1       	2021-04-26 18:56:16.643821889 +0900 JST	deployed	gitlab-4.11.1       	13.11.1    
-ingress-nginx	default  	1       	2021-04-26 18:56:51.050283983 +0900 JST	deployed	ingress-nginx-3.29.0	0.45.0     
-psql-cluster 	default  	1       	2021-04-26 18:54:59.568412454 +0900 JST	deployed	postgresql-10.2.2   	11.10.0    
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 20.04.2 LTS
+Release:	20.04
+Codename:	focal
 
+$ sudo helm list
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+gitlab          default         1               2021-04-26 18:56:16.643821889 +0900 JST deployed        gitlab-4.11.1           13.11.1    
+ingress-nginx   default         1               2021-04-26 18:56:51.050283983 +0900 JST deployed        ingress-nginx-3.29.0    0.45.0     
+localstack      default         1               2021-05-07 02:21:01.549085447 +0900 JST deployed        localstack-0.2.0        latest     
+psql-cluster    default         1               2021-04-26 18:54:59.568412454 +0900 JST deployed        postgresql-10.2.2       11.10.0 
+
+$ sudo minikube version
+[sudo] password for xiaojie: 
 minikube version: v1.19.0
 commit: 15cede53bdc5fe242228853e737333b09d4336b5
 
+$ aws --version
+aws-cli/2.2.2 Python/3.8.8 Linux/5.8.0-50-generic exe/x86_64.ubuntu.20 prompt/off
 
-Description:	Ubuntu 20.04.2 LTS
