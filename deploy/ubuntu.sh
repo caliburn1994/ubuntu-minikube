@@ -37,7 +37,13 @@ function install_desktop_apps() {
 
 function install_tools() {
   # system
-  sudo apt-get install -y openssh-server git make curl vim net-tools jq conntrack
+  sudo apt-get install -y openssh-server git make curl vim net-tools jq conntrack build-essential procps file
+  # Homebrew
+  git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew
+  mkdir ~/.linuxbrew/bin
+  ln -s ~/.linuxbrew/Homebrew/bin/brew ~/.linuxbrew/bin
+  eval $(~/.linuxbrew/bin/brew shellenv)
+  echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bashrc
 
   # development tools
   sudo apt-get install -y npm
