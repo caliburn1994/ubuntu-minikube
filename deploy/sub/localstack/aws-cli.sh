@@ -20,17 +20,21 @@ function install() { # https://docs.aws.amazon.com/zh_cn/cli/latest/userguide/in
     brew tap aws/tap
     brew install aws-sam-cli
     sam --version &>/dev/null || echo_warn "failed to install sam "
+
+    # auto-completion
+    # shellcheck disable=SC2016
+    echo 'export PATH=/usr/local/bin:$PATH' | tee -a ~/.bashrc ; export PATH=/usr/local/bin:$PATH
+    echo 'complete -C '/usr/local/bin/aws_completer' aws' | tee -a ~/.bashrc
   fi
 }
 
-function init() {
-  if !  aws configure list &>/dev/null; then
+function config_profile() {
+  if ! aws configure list &>/dev/null; then
     ls ~/.aws/ &>/dev/null || cp -r "${CURRENT_DIR}/.aws" "$HOME"
     echo "export AWS_PROFILE=localstack" | tee -a ~/.bashrc
   fi
 }
 
-
 echo_running
 install
-init
+config_profile
