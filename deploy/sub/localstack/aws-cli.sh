@@ -22,3 +22,9 @@ if ! type -p aws &>/dev/null; then
   brew install aws-sam-cli
   sam --version &>/dev/null || echo_warn "failed to install sam "
 fi
+
+
+if ! aws sts get-caller-identity &>/dev/null; then
+  ls ~/.aws/ &>/dev/null || cp -r "${CURRENT_DIR}/.aws" "$HOME"
+  echo "export AWS_PROFILE=localstack" | tee -a ~/.bashrc
+fi
