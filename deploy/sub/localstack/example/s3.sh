@@ -17,7 +17,7 @@ function create_bucket() {
 }
 function remove_bucket() {
   echo_debug "removing the bucket"
-    aws s3 rb s3://${bucket_name} \
+  aws s3 rb s3://${bucket_name} \
     --endpoint-url="${url}"
 }
 
@@ -51,9 +51,9 @@ function download_s3() {
   rm ${upload_file}
 }
 function remove_all_objects() {
-    echo_debug "removing all objects"
-    aws s3 rm s3://${bucket_name} --recursive \
-     --endpoint-url="${url}"
+  echo_debug "removing all objects"
+  aws s3 rm s3://${bucket_name} --recursive \
+    --endpoint-url="${url}"
 }
 
 echo_running
