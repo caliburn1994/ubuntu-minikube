@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+
+# This is a tool
 # you can put it in bashrc
 function aws() {
   cmd_str=""
@@ -25,8 +27,10 @@ function aws() {
 
 # test
 # something like `--profile localstack` will not work, you should use `--profile=localstack`
-bucket_name=test-bucket
-aws s3 mb s3://${bucket_name} --profile=localstack
-aws s3 ls --profile=localstack
-aws s3 ls
-aws s3 rb s3://${bucket_name} --endpoint-url=http://192.168.0.156:31566
+function test() {
+  bucket_name=test-bucket
+  aws s3 mb s3://${bucket_name} --profile=localstack
+  aws s3 ls --profile=localstack
+  aws s3 ls
+  aws s3 rb s3://${bucket_name} --endpoint-url=http://192.168.0.156:31566
+}
