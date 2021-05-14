@@ -1,0 +1,17 @@
+# Chinese article:
+# https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html
+
+[Unit]
+Description=localstack
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStart=/usr/local/bin/docker-compose up
+WorkingDirectory=/etc/docker-compose/localstack
+Restart=always
+Type=simple
+TimeoutStartSec=15min
+
+[Install]
+WantedBy=graphical.target

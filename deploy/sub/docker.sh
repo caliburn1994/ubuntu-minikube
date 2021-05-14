@@ -6,13 +6,11 @@ PROJECT_ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../.. >/dev/null 2>&1 &
 # dependencies
 . "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
+# https://docs.docker.com/engine/install/ubuntu/
+function install_docker() {
+  type -p docker &>/dev/null && return 0
 
-echo_running
-# install docker
-if ! type -p docker &>/dev/null; then
   echo_debug "Installing docker..."
-
-  # https://docs.docker.com/engine/install/ubuntu/
   sudo apt-get update
   sudo apt-get install -y \
     apt-transport-https \
@@ -30,18 +28,42 @@ if ! type -p docker &>/dev/null; then
   sudo apt-get update
   sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
+  # tcp
+  #  sudo vim /lib/systemd/system/docker.service
+  sudo systemctl daemon-reload
+  sudo systemctl restart docker.service
+  sudo mkdir -p /etc/systemd/system/docker.service.d # https://docs.docker.com/config/daemon/systemd/
+
   # test
   sudo docker run hello-world
-fi
+}
 
-# assign user right
-if ! groups | grep docker &>/dev/null; then
+# https://docs.docker.com/compose/install/
+function install_docker_compose() {
+  type -p docker-compose &>/dev/null && return 0
+
+  echo_debug "Installing docker..."
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+  sudo curl \
+    -L https://raw.githubusercontent.com/docker/compose/1.29.1/contrib/completion/bash/docker-compose \
+    -o /etc/bash_completion.d/docker-compose
+}
+
+# add the current user to docker group
+function add_user2group() {
+  groups | grep docker &>/dev/null && return 0
+
   echo_debug "Adding current user to docker group... "
-  # add the current user to docker group
   getent group docker &>/dev/null || sudo groupadd docker
   sudo usermod -aG docker "${USER}"
-
   echo_info "For taking effect on usermod globally,It is necessary to reboot."
-  echo_info 'Reboot now? (y/n)' && read -r x && [[ "$x" == "y" ]] && /sbin/reboot;
+  echo_info 'Reboot now? (y/n)' && read -r x && [[ "$x" == "y" ]] && /sbin/reboot
   exit
-fi
+}
+
+# main
+echo_running
+install_docker
+install_docker_compose
+add_user2group

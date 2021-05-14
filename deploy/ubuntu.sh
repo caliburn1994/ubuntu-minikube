@@ -61,7 +61,7 @@ function install_tools() {
   bash "${PROJECT_ROOT_PATH}/deploy/sub/gitlab/gitlab.sh"
 
   # local aws
-  bash "${PROJECT_ROOT_PATH}/deploy/sub/localstack/localstack.sh"
+  bash "${PROJECT_ROOT_PATH}/deploy/sub/localstack/docker-compose/docker-compose.sh"
   bash "${PROJECT_ROOT_PATH}/deploy/sub/localstack/aws-cli.sh"
   bash "${PROJECT_ROOT_PATH}/deploy/sub/localstack/terraform.sh"
 }
