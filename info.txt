@@ -5,6 +5,8 @@ Description:	Ubuntu 20.04.2 LTS
 Release:	20.04
 Codename:	focal
 
+$ helm version
+version.BuildInfo{Version:"v3.5.4", GitCommit:"1b5edb69df3d3a08df77c9902dc17af864ff05d1", GitTreeState:"clean", GoVersion:"go1.15.11"}
 $ sudo helm list
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
 gitlab          default         1               2021-04-26 18:56:16.643821889 +0900 JST deployed        gitlab-4.11.1           13.11.1    
