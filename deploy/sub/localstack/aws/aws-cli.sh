@@ -7,7 +7,7 @@ PROJECT_ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../../../.. >/dev/null 
 
 # https://docs.aws.amazon.com/zh_cn/cli/latest/userguide/install-cliv2-linux.html
 function install() {
-  type -p aws &>/dev/null && exit 0
+  type -p aws &>/dev/null && return 0
 
   echo_debug "Installing aws-cli..."
   gpg --import aswcliv2-public-key # import public key
@@ -32,7 +32,7 @@ function install() {
 }
 
 function config_profile() {
-  aws configure list &>/dev/null && exit 0
+  aws configure list &>/dev/null && return 0
 
   ls ~/.aws/ &>/dev/null || cp -r "${CURRENT_DIR}/.aws" "$HOME"
   echo "export AWS_PROFILE=localstack" | tee -a ~/.bashrc
