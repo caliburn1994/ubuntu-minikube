@@ -24,7 +24,8 @@ function output_config() {
 function heath_check() {
   url=$(cat "${PROJECT_ROOT_PATH}/out/localstack/expose_ip.txt")
   rsl=$(curl -s "$url") # -s silent
-  [[ ${rsl} == '{"status": "running"}' ]] && echo_warn "Localstack was broken"
+
+  [[ ${rsl} != '{"status": "running"}' ]] && echo_warn "Localstack was broken"
 }
 
 echo_running
