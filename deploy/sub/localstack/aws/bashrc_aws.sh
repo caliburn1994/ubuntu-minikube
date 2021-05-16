@@ -2,7 +2,7 @@
 
 PROJECT_ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../../../.. >/dev/null 2>&1 && pwd)" && . "${PROJECT_ROOT_PATH}/deploy/common.sh"
 AWS_ENDPOINT=$(cat "${PROJECT_ROOT_PATH}/out/localstack/expose_ip.txt")
-AWS_PROFILE=localstack
+export AWS_PROFILE=localstack && echo "AWS_PROFILE=localstack"
 
 # This is a tool
 # you can put it in bashrc
@@ -10,7 +10,8 @@ function aws() {
   cmd_str=""
 
   # default optional parameters
-  dop=("--profile=${AWS_PROFILE}" "--endpoint-url=${AWS_ENDPOINT}")
+  #  dop=("--profile=${AWS_PROFILE}" "--endpoint-url=${AWS_ENDPOINT}")
+  dop=("--endpoint-url=${AWS_ENDPOINT}")
 
   # optional parameters
   for op in "$@"; do
