@@ -45,5 +45,6 @@ source_root() {
     echo_warn "$file doesn't exist."
     exit 1
   fi
-  echo "$file"
+  # shellcheck disable=SC1090
+  source "$file"
 }
