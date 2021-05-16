@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
+PROJECT_ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../../../.. >/dev/null 2>&1 && pwd)" && . "${PROJECT_ROOT_PATH}/deploy/common.sh"
+AWS_ENDPOINT=$(cat "${PROJECT_ROOT_PATH}/out/localstack/expose_ip.txt")
+AWS_PROFILE=localstack
+
 # This is a tool
 # you can put it in bashrc
 function aws() {
   cmd_str=""
 
   # default optional parameters
-  dop=("--profile=localstack" "--endpoint-url=http://192.168.0.156:31566")
+  dop=("--profile=${AWS_PROFILE}" "--endpoint-url=${AWS_ENDPOINT}")
 
   # optional parameters
   for op in "$@"; do
@@ -21,16 +25,16 @@ function aws() {
     done
   done
 
-  echo "/usr/local/bin/aws $cmd_str " "${dop[@]}"
-  eval "/usr/local/bin/aws $cmd_str " "${dop[@]}"
+  echo_debug "aws $cmd_str" "${dop[@]}"
+  eval "/usr/local/bin/aws $cmd_str" "${dop[@]}"
 }
 
 # test
 # something like `--profile localstack` will not work, you should use `--profile=localstack`
-function test() {
+function test_bashrc_aws() {
   bucket_name=test-bucket
-  aws s3 mb s3://${bucket_name} --profile=localstack
-  aws s3 ls --profile=localstack
+  aws s3 mb s3://${bucket_name} --profile=${AWS_PROFILE}
+  aws s3 ls --profile=${AWS_PROFILE}
   aws s3 ls
-  aws s3 rb s3://${bucket_name} --endpoint-url=http://192.168.0.156:31566
+  aws s3 rb s3://${bucket_name} --endpoint-url="${AWS_ENDPOINT}"
 }
