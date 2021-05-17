@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 # ubuntu 20
 set -e
+SCRIPT_MODULE=deploy
+PROJECT_ROOT_PATH="$(pwd | awk -F "/${SCRIPT_MODULE}" '{print $1}')" && source "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
-# constant
-PROJECT_ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")"/.. >/dev/null 2>&1 && pwd)"
+# variables
 CURRENT_DIR=$(dirname "$0")
 
-# dependencies
-. "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
 echo_info "Running ${CURRENT_DIR}/$(basename $0)"
 function install_desktop_apps() {
