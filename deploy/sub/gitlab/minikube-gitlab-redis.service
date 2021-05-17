@@ -6,10 +6,11 @@ Description=forward redis in kubernetes
 After=docker.service
 
 [Service]
-ExecStart=kubectl port-forward --namespace default svc/gitlab-redis-master 6379:6379 --address 0.0.0.0
+ExecStart=/usr/bin/sudo kubectl port-forward --namespace default svc/gitlab-redis-master 6379:6379 --address 0.0.0.0
 Restart=always
-User=${USER}
+User=root
 RestartSec=3
+Environment="KUBECONFIG=/etc/kubernetes/kubelet.conf"
 
 [Install]
 WantedBy=graphical.target

@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-# constant
-PROJECT_ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../../../.. >/dev/null 2>&1 && pwd)"
-# dependencies
-. "${PROJECT_ROOT_PATH}/deploy/common.sh"
+SCRIPT_MODULE=deploy
+PROJECT_ROOT_PATH="$(echo "${BASH_SOURCE[0]}" | awk -F "/${SCRIPT_MODULE}" '{print $1}')" && source "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
 function download() {
   dc_file="/etc/docker-compose/localstack/docker-compose.yml"

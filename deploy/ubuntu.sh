@@ -2,7 +2,7 @@
 # ubuntu 20
 set -e
 SCRIPT_MODULE=deploy
-PROJECT_ROOT_PATH="$(pwd | awk -F "/${SCRIPT_MODULE}" '{print $1}')" && source "${PROJECT_ROOT_PATH}/deploy/common.sh"
+PROJECT_ROOT_PATH="$( echo "${BASH_SOURCE[0]}"  | awk -F "/${SCRIPT_MODULE}" '{print $1}')" && source "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
 # variables
 CURRENT_DIR=$(dirname "$0")

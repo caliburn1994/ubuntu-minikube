@@ -22,7 +22,9 @@ function echo_debug() {
 
 # message
 function echo_running() {
-  echo_info "Running ${CURRENT_DIR}/$(basename $0)"
+  local base_name=${1-$0}
+  base_name=$(basename "$base_name")
+  echo_info "Running ${CURRENT_DIR}/${base_name}"
 }
 
 # para1 = service name
@@ -49,6 +51,8 @@ source_root() {
     echo_warn "$file doesn't exist."
     exit 1
   fi
+
+  echo_debug "import $file"
   # shellcheck disable=SC1090
   source "$file"
 }
