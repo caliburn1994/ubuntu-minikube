@@ -25,8 +25,12 @@ function echo_running() {
   echo_info "Running ${CURRENT_DIR}/$(basename $0)"
 }
 
+# para1 = service name
+# para2 = is redeploy (default false)
 function make_service() {
   local service_name=${1}
+  local is_redeploy && is_redeploy=${2:-false}
+  if systemctl --all --type service | grep -q "${service_name}" && ! ${is_redeploy}; then return 0; fi
 
   echo_debug "Making service ${service_name}"
   local tmp_dir
@@ -41,7 +45,7 @@ function make_service() {
 # dependencies
 source_root() {
   local file="$PROJECT_ROOT_PATH/$1"
-  if ! [[  $PROJECT_ROOT_PATH && -f "$file" ]]; then
+  if ! [[ $PROJECT_ROOT_PATH && -f "$file" ]]; then
     echo_warn "$file doesn't exist."
     exit 1
   fi
