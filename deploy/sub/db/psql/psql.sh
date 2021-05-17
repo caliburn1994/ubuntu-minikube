@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
+SCRIPT_MODULE=deploy
+PROJECT_ROOT_PATH="$(pwd | awk -F "/${SCRIPT_MODULE}" '{print $1}')" && source "${PROJECT_ROOT_PATH}/deploy/common.sh"
+
 # constant
-PROJECT_ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../../../.. >/dev/null 2>&1 && pwd)"
 POSTGRES_K8S_BASENAME="psql-cluster" && export POSTGRES_K8S_BASENAME
 POSTGRES_K8S_SERVICE="${POSTGRES_K8S_BASENAME}-postgresql" && export POSTGRES_K8S_SERVICE
-# dependencies
-. "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
 echo_running
 # install
