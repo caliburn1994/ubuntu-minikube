@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-# constant
-PROJECT_ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../.. >/dev/null 2>&1 && pwd)"
-# dependencies
-. "${PROJECT_ROOT_PATH}/deploy/common.sh"
+SCRIPT_MODULE=deploy
+PROJECT_ROOT_PATH="$(pwd | awk -F "/${SCRIPT_MODULE}" '{print $1}')" && source "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
 echo_running
 # https://helm.sh/zh/

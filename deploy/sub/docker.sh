@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-# constant
-PROJECT_ROOT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../.. >/dev/null 2>&1 && pwd)"
-# dependencies
-. "${PROJECT_ROOT_PATH}/deploy/common.sh"
+SCRIPT_MODULE=deploy
+PROJECT_ROOT_PATH="$(pwd | awk -F "/${SCRIPT_MODULE}" '{print $1}')" && source "${PROJECT_ROOT_PATH}/deploy/common.sh"
 
 # https://docs.docker.com/engine/install/ubuntu/
 function install_docker() {
