@@ -16,7 +16,6 @@ function aws() {
   # optional parameters
   for op in "$@"; do
     cmd_str+="$op "
-
     # if positional parameters exists, default positional parameters will be assigned an empty string
     for ((i = 0; i < ${#dop[@]}; ++i)); do
       IFS="=" read -r para _ <<<"${dop[$i]}"
@@ -25,8 +24,6 @@ function aws() {
       fi
     done
   done
-
-  echo_debug "aws $cmd_str" "${dop[@]}"
   eval "/usr/local/bin/aws $cmd_str" "${dop[@]}"
 }
 
