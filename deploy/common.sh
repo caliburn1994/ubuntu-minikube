@@ -9,15 +9,18 @@ pink=$(tput setaf 13)
 reset=$(tput sgr0)
 
 function echo_warn() {
-  echo "${red}${1}${reset}"
+  LOG_PROMPT="[$(basename "${BASH_SOURCE[1]}")][${FUNCNAME[1]}]L${BASH_LINENO[0]}"
+  echo "${LOG_PROMPT} ${red}${1}${reset}"
 }
 
 function echo_info() {
-  echo "${green}${1}${reset}"
+  LOG_PROMPT="[$(basename "${BASH_SOURCE[1]}")][${FUNCNAME[1]}]L${BASH_LINENO[0]}"
+  echo "${LOG_PROMPT} ${green}${1}${reset}"
 }
 
 function echo_debug() {
-  echo "${pink}${1}${reset}"
+  LOG_PROMPT="[$(basename "${BASH_SOURCE[1]}")][${FUNCNAME[1]}]L${BASH_LINENO[0]}"
+  echo "${LOG_PROMPT} ${pink}${1}${reset}"
 }
 
 # message
